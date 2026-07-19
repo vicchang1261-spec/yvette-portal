@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>LIFF 測試</title>
+
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+</head>
+
+<body>
+
+<h1>LIFF 測試</h1>
+
+<div id="status">初始化中...</div>
+
+<script>
+
+const LIFF_ID = "2010755547-Y32aWz74";
+
+async function main() {
+
+    await liff.init({
+        liffId: LIFF_ID
+    });
+
+    if (!liff.isLoggedIn()) {
+
+        liff.login();
+
+        return;
+
+    }
+
+    const profile = await liff.getProfile();
+
+    document.getElementById("status").innerHTML = `
+        <h2>登入成功</h2>
+
+        <p><b>姓名：</b>${profile.displayName}</p>
+
+        <p><b>UserID：</b>${profile.userId}</p>
+    `;
+
+}
+
+main();
+
+</script>
+
+</body>
+
+</html>
