@@ -6,6 +6,8 @@
 
 <title>伊凡特文教機構｜課程報名入口</title>
 
+<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+
 <style>
 
 *{
@@ -42,8 +44,14 @@ header p{
     font-size:18px;
 }
 
-.card{
+#loginInfo{
+    margin-top:15px;
+    color:#666;
+    font-size:14px;
+    word-break:break-all;
+}
 
+.card{
     background:white;
     border-radius:15px;
     padding:25px;
@@ -77,7 +85,6 @@ header p{
 }
 
 .button{
-
     display:inline-block;
     background:#1f7aec;
     color:white;
@@ -89,12 +96,10 @@ header p{
 }
 
 .button:hover{
-
     background:#0f5fc8;
 }
 
 footer{
-
     text-align:center;
     margin-top:50px;
     color:#777;
@@ -130,6 +135,10 @@ header p{
 <h1>伊凡特文教機構</h1>
 
 <p>課程報名入口</p>
+
+<div id="loginInfo">
+登入中...
+</div>
 
 </header>
 
@@ -236,6 +245,46 @@ target="_blank">
 </footer>
 
 </div>
+
+<script>
+
+const LIFF_ID = "2010755547-Y32aWz74";
+
+async function initLiff(){
+
+    try{
+
+        await liff.init({
+            liffId: LIFF_ID
+        });
+
+        if(!liff.isLoggedIn()){
+            liff.login();
+            return;
+        }
+
+        const profile = await liff.getProfile();
+
+        document.getElementById("loginInfo").innerHTML =
+            "👤 <b>" + profile.displayName + "</b><br>" +
+            "UserID：<small>" + profile.userId + "</small>";
+
+        console.log(profile);
+
+    }catch(err){
+
+        console.error(err);
+
+        document.getElementById("loginInfo").innerHTML =
+            "LIFF 初始化失敗：" + err;
+
+    }
+
+}
+
+initLiff();
+
+</script>
 
 </body>
 
