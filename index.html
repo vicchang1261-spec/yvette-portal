@@ -47,8 +47,7 @@ header p{
 #loginInfo{
     margin-top:15px;
     color:#666;
-    font-size:14px;
-    word-break:break-all;
+    font-size:16px;
 }
 
 .card{
@@ -137,7 +136,7 @@ header p{
 <p>課程報名入口</p>
 
 <div id="loginInfo">
-登入中...
+正在確認 LINE 身分...
 </div>
 
 </header>
@@ -159,9 +158,7 @@ header p{
 <a class="button"
 href="https://bit.ly/2tdy58e"
 target="_blank">
-
 立即報名
-
 </a>
 
 </div>
@@ -183,9 +180,7 @@ target="_blank">
 <a class="button"
 href="https://tinyurl.com/28q2zl98"
 target="_blank">
-
 立即報名
-
 </a>
 
 </div>
@@ -207,9 +202,7 @@ target="_blank">
 <a class="button"
 href="https://goo.gl/8Rbpy4"
 target="_blank">
-
 立即報名
-
 </a>
 
 </div>
@@ -231,17 +224,13 @@ target="_blank">
 <a class="button"
 href="https://goo.gl/vxtqDK"
 target="_blank">
-
 立即報名
-
 </a>
 
 </div>
 
 <footer>
-
 © 2026 伊凡特文教機構
-
 </footer>
 
 </div>
@@ -265,18 +254,24 @@ async function initLiff(){
 
         const profile = await liff.getProfile();
 
-        document.getElementById("loginInfo").innerHTML =
-            "👤 <b>" + profile.displayName + "</b><br>" +
-            "UserID：<small>" + profile.userId + "</small>";
+        // 全站共用登入資訊
+        window.userProfile = {
+            userId: profile.userId,
+            displayName: profile.displayName
+        };
 
-        console.log(profile);
+        // 只顯示歡迎訊息
+        document.getElementById("loginInfo").innerHTML =
+            `👋 <b>${profile.displayName}</b>，您好！歡迎使用伊凡特文教機構線上報名系統。`;
+
+        console.log("LIFF Profile", window.userProfile);
 
     }catch(err){
 
         console.error(err);
 
         document.getElementById("loginInfo").innerHTML =
-            "LIFF 初始化失敗：" + err;
+            "❌ 登入失敗，請由 LINE 官方帳號重新開啟此頁面。";
 
     }
 
@@ -287,5 +282,4 @@ initLiff();
 </script>
 
 </body>
-
 </html>
